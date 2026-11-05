@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+  body { @apply bg-white font-sans text-slate-800 antialiased; text-rendering: optimizeLegibility; }
+  ::selection { @apply bg-accent-300 text-brand-900; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* Loop das avaliações: roda mesmo com "efeitos de animação" desligados no Windows/macOS
+   (prefers-reduced-motion), pois é lento e pausa ao passar o mouse ou focar. */
+.marquee { animation: marquee var(--marquee-dur, 30s) linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation-duration: calc(var(--marquee-dur, 30s) * 1.5) !important; }
+}
+
+/* ---------- celular do topo ---------- */
+@keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+.flutuar { animation: flutuar 5s ease-in-out infinite; }
+
+/* notebook: dica "role para abrir" */
+@keyframes dica-rolar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+.dica-rolar { animation: dica-rolar 1.2s ease-in-out infinite; }
+
+@keyframes batida { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.3); } 30% { transform: scale(0.95); } 45% { transform: scale(1.15); } }
+.batida { animation: batida 1.8s ease-in-out infinite; transform-origin: center; }
+
+@keyframes subir {
+  0% { transform: translate(0, 0) scale(.6); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate(var(--dx, 0px), -90px) scale(1.1); opacity: 0; }
+}
+.coracao-sobe { animation: subir 2.6s ease-out infinite; opacity: 0; }
+
+@keyframes brilho { 0% { transform: translateX(-120%) skewX(-20deg); } 40%, 100% { transform: translateX(320%) skewX(-20deg); } }
+.brilho { animation: brilho 4.5s ease-in-out 2s infinite; transform: translateX(-120%); }
+
+@keyframes aura { 0%, 100% { opacity: .45; transform: translate(-50%, -50%) scale(1); } 50% { opacity: .8; transform: translate(-50%, -50%) scale(1.08); } }
+.aura { animation: aura 4s ease-in-out infinite; transform: translate(-50%, -50%); }
+
+/* mesmo critério do loop das avaliações: animações suaves continuam com "efeitos de animação" desligados */
+@media (prefers-reduced-motion: reduce) {
+  .flutuar { animation-duration: 5s !important; }
+  .dica-rolar { animation-duration: 1.2s !important; }
+  .batida { animation-duration: 1.8s !important; }
+  .coracao-sobe { animation-duration: 2.6s !important; }
+  .brilho { animation-duration: 4.5s !important; }
+  .aura { animation-duration: 4s !important; }
+}
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes blob {
+  0%, 100% { border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%; }
+  50% { border-radius: 55% 45% 42% 58% / 45% 56% 44% 55%; }
+}
